@@ -367,6 +367,14 @@ namespace BWScli.BWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClass", ReplyAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClassResponse")]
         System.Threading.Tasks.Task<bool> DeleteClassAsync(BWScli.BWS.BiometricClassID classId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolled", ReplyAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolledResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(BWScli.BWS.BioIDWebServiceFault), Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolledBioIDWebServiceFaultF" +
+            "ault", Name="BioIDWebServiceFault", Namespace="http://schemas.bioid.com/2011/12/bws")]
+        bool IsEnrolled(BWScli.BWS.BiometricClassID classId, BWScli.BWS.Trait trait);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolled", ReplyAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolledResponse")]
+        System.Threading.Tasks.Task<bool> IsEnrolledAsync(BWScli.BWS.BiometricClassID classId, BWScli.BWS.Trait trait);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -714,6 +722,14 @@ namespace BWScli.BWS {
         
         public System.Threading.Tasks.Task<bool> DeleteClassAsync(BWScli.BWS.BiometricClassID classId) {
             return base.Channel.DeleteClassAsync(classId);
+        }
+        
+        public bool IsEnrolled(BWScli.BWS.BiometricClassID classId, BWScli.BWS.Trait trait) {
+            return base.Channel.IsEnrolled(classId, trait);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsEnrolledAsync(BWScli.BWS.BiometricClassID classId, BWScli.BWS.Trait trait) {
+            return base.Channel.IsEnrolledAsync(classId, trait);
         }
     }
 }

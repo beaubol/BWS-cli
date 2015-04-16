@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://playground.bioid.com/Content/BWS/www.bioid.com.2011.12.bws.single.wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://bws.bioid.com/BioIDWebService.svc?singleWsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BioIDWebService.wsdl" MetadataType="Wsdl" ID="4b7ac5ea-6814-4b0d-ad2c-eb2dc6261d9f" SourceId="1" SourceUrl="https://playground.bioid.com/Content/BWS/www.bioid.com.2011.12.bws.single.wsdl" />
+    <MetadataFile FileName="BioIDWebService.wsdl" MetadataType="Wsdl" ID="3a50ab3e-81c3-4ba5-bee7-c8355ea24a09" SourceId="1" SourceUrl="https://bws.bioid.com/BioIDWebService.svc?singleWsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

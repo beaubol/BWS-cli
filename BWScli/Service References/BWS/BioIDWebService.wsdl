@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://www.bioid.com/2011/12/bws" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:i0="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BioIDWebService" targetNamespace="http://www.bioid.com/2011/12/bws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IBioIDWebService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="true" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.bioid.com/2011/12/bws" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.bioid.com/2011/12/bws" />
+      <xs:element name="Enroll">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="classId" nillable="true" type="q1:BiometricClassID" />
+            <xs:element xmlns:q2="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="samples" nillable="true" type="q2:ArrayOfSample" />
+            <xs:element xmlns:q3="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="flags" type="q3:EnrollmentFlags" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EnrollResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="EnrollResult" type="xs:boolean" />
+            <xs:element minOccurs="0" name="messages" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Verify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="classId" nillable="true" type="q4:BiometricClassID" />
+            <xs:element xmlns:q5="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="samples" nillable="true" type="q5:ArrayOfSample" />
+            <xs:element xmlns:q6="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="flags" type="q6:ClassificationFlags" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="VerifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="VerifyResult" type="xs:boolean" />
+            <xs:element minOccurs="0" name="messages" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Identify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="partitionId" nillable="true" type="q7:BiometricClassID" />
+            <xs:element xmlns:q8="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="samples" nillable="true" type="q8:ArrayOfSample" />
+            <xs:element xmlns:q9="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="flags" type="q9:ClassificationFlags" />
+            <xs:element minOccurs="0" name="maxResults" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IdentifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IdentifyResult" type="xs:boolean" />
+            <xs:element xmlns:q10="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="matches" nillable="true" type="q10:ArrayOfScoredClass" />
+            <xs:element minOccurs="0" name="messages" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="QualityCheck">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="samples" nillable="true" type="q11:ArrayOfSample" />
+            <xs:element xmlns:q12="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="flags" type="q12:TestFlags" />
+            <xs:element minOccurs="0" name="issuer" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="QualityCheckResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="QualityCheckResult" type="xs:boolean" />
+            <xs:element xmlns:q13="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="processedSamples" nillable="true" type="q13:ArrayOfSample" />
+            <xs:element minOccurs="0" name="messages" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Status">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="StatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="StatusResult" type="xs:boolean" />
+            <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteClass">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="classId" nillable="true" type="q14:BiometricClassID" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteClassResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="DeleteClassResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsEnrolled">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q15="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="classId" nillable="true" type="q15:BiometricClassID" />
+            <xs:element xmlns:q16="http://schemas.bioid.com/2011/12/bws" minOccurs="0" name="trait" type="q16:Trait" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsEnrolledResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsEnrolledResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.bioid.com/2011/12/bws" elementFormDefault="qualified" targetNamespace="http://schemas.bioid.com/2011/12/bws" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="BiometricClassID">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClassID" type="xs:int" />
+          <xs:element minOccurs="0" name="Partition" type="xs:int" />
+          <xs:element minOccurs="0" name="Storage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BiometricClassID" nillable="true" type="tns:BiometricClassID" />
+      <xs:complexType name="ArrayOfSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Sample" nillable="true" type="tns:Sample" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSample" nillable="true" type="tns:ArrayOfSample" />
+      <xs:complexType name="Sample">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Data" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="Tag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Trait" type="tns:Trait" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Sample" nillable="true" type="tns:Sample" />
+      <xs:simpleType name="Trait">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Face" />
+              <xs:enumeration value="Ocular" />
+              <xs:enumeration value="Voice" />
+              <xs:enumeration value="Fingerprint" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:element name="Trait" nillable="true" type="tns:Trait" />
+      <xs:simpleType name="EnrollmentFlags">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="None">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="OverwriteExisitingData">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LiveFaceDetection">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:element name="EnrollmentFlags" nillable="true" type="tns:EnrollmentFlags" />
+      <xs:complexType name="BioIDWebServiceFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BioIDWebServiceFault" nillable="true" type="tns:BioIDWebServiceFault" />
+      <xs:simpleType name="ClassificationFlags">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="None">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LiveFaceDetection">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AutoEnrollment">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:element name="ClassificationFlags" nillable="true" type="tns:ClassificationFlags" />
+      <xs:complexType name="ArrayOfScoredClass">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ScoredClass" nillable="true" type="tns:ScoredClass" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfScoredClass" nillable="true" type="tns:ArrayOfScoredClass" />
+      <xs:complexType name="ScoredClass">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:BiometricClassID">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Score" type="xs:double" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ScoredClass" nillable="true" type="tns:ScoredClass" />
+      <xs:simpleType name="TestFlags">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ExtractTokenData" />
+          <xs:enumeration value="ICAOChecks" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="TestFlags" nillable="true" type="tns:TestFlags" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IBioIDWebService_Enroll_InputMessage">
+    <wsdl:part name="parameters" element="tns:Enroll" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Enroll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnrollResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Enroll_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.bioid.com/2011/12/bws" name="detail" element="q1:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Verify_InputMessage">
+    <wsdl:part name="parameters" element="tns:Verify" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Verify_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Verify_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.bioid.com/2011/12/bws" name="detail" element="q2:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Identify_InputMessage">
+    <wsdl:part name="parameters" element="tns:Identify" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Identify_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IdentifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Identify_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.bioid.com/2011/12/bws" name="detail" element="q3:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_QualityCheck_InputMessage">
+    <wsdl:part name="parameters" element="tns:QualityCheck" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_QualityCheck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QualityCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_QualityCheck_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.bioid.com/2011/12/bws" name="detail" element="q4:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Status_InputMessage">
+    <wsdl:part name="parameters" element="tns:Status" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Status_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_Status_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.bioid.com/2011/12/bws" name="detail" element="q5:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_DeleteClass_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteClass" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_DeleteClass_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteClassResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_DeleteClass_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.bioid.com/2011/12/bws" name="detail" element="q6:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_IsEnrolled_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsEnrolled" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_IsEnrolled_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsEnrolledResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBioIDWebService_IsEnrolled_BioIDWebServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.bioid.com/2011/12/bws" name="detail" element="q7:BioIDWebServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="IBioIDWebService">
+    <wsdl:operation name="Enroll">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/Enroll" message="tns:IBioIDWebService_Enroll_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/EnrollResponse" message="tns:IBioIDWebService_Enroll_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/EnrollBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_Enroll_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Verify">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/Verify" message="tns:IBioIDWebService_Verify_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/VerifyResponse" message="tns:IBioIDWebService_Verify_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/VerifyBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_Verify_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Identify">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/Identify" message="tns:IBioIDWebService_Identify_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IdentifyResponse" message="tns:IBioIDWebService_Identify_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IdentifyBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_Identify_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QualityCheck">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/QualityCheck" message="tns:IBioIDWebService_QualityCheck_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/QualityCheckResponse" message="tns:IBioIDWebService_QualityCheck_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/QualityCheckBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_QualityCheck_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Status">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/Status" message="tns:IBioIDWebService_Status_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/StatusResponse" message="tns:IBioIDWebService_Status_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/StatusBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_Status_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClass">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClass" message="tns:IBioIDWebService_DeleteClass_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClassResponse" message="tns:IBioIDWebService_DeleteClass_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClassBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_DeleteClass_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsEnrolled">
+      <wsdl:input wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolled" message="tns:IBioIDWebService_IsEnrolled_InputMessage" />
+      <wsdl:output wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolledResponse" message="tns:IBioIDWebService_IsEnrolled_OutputMessage" />
+      <wsdl:fault wsam:Action="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolledBioIDWebServiceFaultFault" name="BioIDWebServiceFaultFault" message="tns:IBioIDWebService_IsEnrolled_BioIDWebServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IBioIDWebService" type="tns:IBioIDWebService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IBioIDWebService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Enroll">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/Enroll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Verify">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/Verify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Identify">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/Identify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QualityCheck">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/QualityCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Status">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/Status" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClass">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/DeleteClass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IsEnrolled">
+      <soap:operation soapAction="http://www.bioid.com/2011/12/bws/IBioIDWebService/IsEnrolled" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="BioIDWebServiceFaultFault">
+        <soap:fault use="literal" name="BioIDWebServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BioIDWebService">
+    <wsdl:port name="BasicHttpBinding_IBioIDWebService" binding="tns:BasicHttpBinding_IBioIDWebService">
+      <soap:address location="https://bws.bioid.com/BioIDWebService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
