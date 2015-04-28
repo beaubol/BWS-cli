@@ -45,7 +45,7 @@ namespace BWScli
             try
             {
                 // connect to  BWS
-                client = new BioIDWebServiceClient("SecureHttpEndpoint");
+                client = new BioIDWebServiceClient();
 
                 // go for the commands:
                 // - Enrollment
