@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BioID GmbH")]
 [assembly: AssemblyProduct("BioID Web Service CLI")]
-[assembly: AssemblyCopyright("Copyright (c) 2014 BioID GmbH")]
+[assembly: AssemblyCopyright("Copyright (c) 2015 BioID GmbH")]
 [assembly: AssemblyTrademark("BioID is a registered trademark of BioID GmbH")]
 [assembly: AssemblyCulture("")]
 
